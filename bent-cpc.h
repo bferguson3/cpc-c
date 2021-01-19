@@ -33,16 +33,16 @@ void SetPalette(u8 pen, u8 c)
     __asm
     
     push ix
-	ld ix, #0
-	add	ix, sp
+    ld ix, #0
+    add ix, sp
 
     ld a, 4 (ix)
     ld b, 5 (ix)
     ld c, 5 (ix)
     call #SCR_SET_INK
 
-	pop	ix
-	ret
+    pop ix
+    ret
     
     __endasm;
 }
