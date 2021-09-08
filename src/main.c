@@ -1,31 +1,51 @@
-// CPC System Routines
-#define CHANGE_VIDEO_MODE 0xbc0e 
-#define SCR_SET_INK 0xbc32
-#define VRAM_BASE 0xc000
+#include <stdio.h>
 
-#define BG_PEN 0
-#define FG_PEN 1
+//#define z88dk 1
+#ifdef z88dk
+//#include <cpc.h>
+//#include <fcntl.h>
+#endif
+// My CPC stuff
+#include "bent-cpc.h"
 
-// Typedefs
-typedef unsigned char u8;
-typedef signed char s8;
-typedef unsigned int u16;
-typedef signed int s16;
-typedef volatile unsigned char vu8;
-typedef volatile signed char vs8;
-typedef volatile unsigned int vu16;
-typedef volatile signed int vs16;
 
-// Routines
-void WaitForKey();
+void FillScreen_PixelTest();
 
-void SetVideoMode(u8 mode);
-void SetPalette(u8 pen, u8 c);
+int main()
+{
+    // Set video and color
+    SetVideoMode(0);
+    SetPalette(BG_PEN, 0);
+    SetPalette(FG_PEN, 6);
 
-void SetPixel_m0(u8 x, u8 y, u8 val);
-void SetPixel_m1(u16 x, u8 y, u8 val);
-void SetPixel_m2(u16 x, u8 y, u8 val);
+    // Test
+    printf("Hi World");
 
+    // smiley face
+    //FillScreen_PixelTest();
+    //SetPixel_m0(20, 20, 1);
+    //SetPixel_m0(100, 30, 1);
+    //for(u16 i = 0; i < 100; i++)
+    //    SetPixel_m0(20 + i, 160, 1);
+    //for(u16 i = 0; i < 100; i++)
+    //    SetPixel_m0(20 + i, 160, 1);
+
+    // end when key pressed 
+    //WaitForKey();
+    while(1){
+	printf("hi");
+	}
+    return 0;
+}
+
+void FillScreen_PixelTest()
+{
+    volatile u8* p;
+    for(u16 i = 0; i < 0x3fff; i++){
+        p = (u8*)(VRAM_BASE + i);
+        *p = i % 256;
+    }
+}
 
 void SetPalette(u8 pen, u8 c)
 {
