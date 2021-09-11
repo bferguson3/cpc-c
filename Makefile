@@ -5,11 +5,12 @@
 PROJECT=projects/hw
 
 default: 
-	sdcc --data-loc 0x138 --code-loc 0x200 -mz80 --no-std-crt0 lib/crt0_cpc.rel lib/putchar_cpc.rel $(PROJECT)/main.c -o out/main.ihx
+	sdcc --verbose -mz80 --no-std-crt0 --code-loc 0x4200 --data-loc 0x4100 $(PROJECT)/main.c -o out/main.ihx
 	python3 tools/hex2bin.py out/main.ihx ./main.bin
-#	python3 addamsheader.py MAIN.BIN
+	python3 tools/addamsheader.py main.bin 0x4100 0x4200
+	rm main.bin
 #	xcpc --drive0=./
 
 clean:
 	rm -rf out/*
-	rm main.bin
+	rm -rf main.bin

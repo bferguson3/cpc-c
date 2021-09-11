@@ -1,6 +1,6 @@
-#include <stdio.h>
-
 void main(void)
 {
-    printf("Hello\n");
+    unsigned char* c = 0xc000;
+    *c = 0xff;
+    while(1){}
 }
